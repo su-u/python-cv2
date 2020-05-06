@@ -16,16 +16,22 @@ if not os.path.exists(dirname):
 
 cut: int = 1
 #画像ファイルの読み込み
-for fname in files: 
+for fname in files:
+
     bgr = cv2.imread(fname, cv2.IMREAD_COLOR)
+    if bgr is None:
+        print(fname + ':Cannot read image file')
+        continue
     gray = cv2.cvtColor(bgr, cv2.COLOR_BGR2GRAY)
     face_rects = cascade.detectMultiScale(gray, 1.1, 3)
     
 
 #カスケード型分類器を使用して画像ファイルから顔部分を検出する
     face = cascade.detectMultiScale(gray)
- 
- 
+    if len(face) <= 0:
+        print(fname)
+        continue
+    
 #顔の座標を表示する
     # print(face)
  
@@ -40,7 +46,8 @@ for fname in files:
 
 #画像の出力
     dir: str = f"./outDir/{os.path.basename(fname)}"
-    print(dir)
+    # print(dir)
+    # cv2.imshow("frame_orig", face_cut)
     try:
         cv2.imwrite(dir, face_cut)
     except Exception as e:
