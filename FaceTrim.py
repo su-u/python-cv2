@@ -3,8 +3,6 @@ import cv2
 import numpy as np
 import glob
 import os
-import time
-import copy
  
 #カスケード型分類器に使用する分類器のデータ（xmlファイル）を読み込み
 HAAR_FILE="./haarcascade_frontalface_alt.xml"
