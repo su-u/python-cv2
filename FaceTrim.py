@@ -9,7 +9,9 @@ HAAR_FILE="./haarcascade_frontalface_alt.xml"
 cascade = cv2.CascadeClassifier(HAAR_FILE)
 
 files = glob.glob("./img/SpringBase/*")
-
+dirname = 'outDir'
+if not os.path.exists(dirname):
+    os.mkdir(dirname)
 
 
 #画像ファイルの読み込み
@@ -34,7 +36,8 @@ for fname in files:
     for x,y,w,h in face:
         cv2.rectangle(bgr,(x,y),(x+w,y+h),(255,255,255),2)
  
+    print(os.path.join('oudDir', os.path.basename(fname)))
 #画像の出力
-    cv2.imwrite(os.path.join('./oudDir', os.path.basename(fname)), face_cut)
-    # cv2.imwrite(fname, face_cut)
+    # cv2.imwrite(os.path.join('oudDir', os.path.basename(fname)), face_cut)
+    cv2.imwrite(fname, face_cut)
 
