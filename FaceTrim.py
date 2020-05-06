@@ -10,8 +10,8 @@ import copy
 HAAR_FILE="./haarcascade_frontalface_alt.xml"
 cascade = cv2.CascadeClassifier(HAAR_FILE)
 
-files = glob.glob("./img/same/*")
-# files = glob.glob("./img/SpringBase/*")
+# files = glob.glob("./img/same/*")
+files = glob.glob("./img/SpringBase/*")
 dirname = 'outDir'
 if not os.path.exists(dirname):
     os.mkdir(dirname)
@@ -29,14 +29,14 @@ for fname in files:
     print(fname)
     continue
 
-  if len(face) > 0:
-    count: int = 0
-    for x, y, w, h in face:
-      face_cut = bgr[y: y + h, x: x + w]
-      cv2.rectangle(bgr, (x, y), (x + w, y + h), (255, 255, 255), 2)
-      try:
-          dir: str = f"{dirname}/{os.path.basename(fname)}-{count}.jpg"
-          cv2.imwrite(dir, face_cut)
-          count += 1
-      except Exception as e:
-          print(e)
+  count: int = 0
+  for x, y, w, h in face:
+    face_cut = bgr[y: y + h, x: x + w]
+    cv2.rectangle(bgr, (x, y), (x + w, y + h), (255, 255, 255), 2)
+    try:
+        dir: str = f"{dirname}/{os.path.basename(fname)}-{count}.jpg"
+        cv2.imwrite(dir, face_cut)
+        count += 1
+    except Exception as e:
+        print(e)
+  
