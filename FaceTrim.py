@@ -14,6 +14,7 @@ if not os.path.exists(dirname):
     os.mkdir(dirname)
 
 
+cut: int = 1
 #画像ファイルの読み込み
 for fname in files: 
     bgr = cv2.imread(fname, cv2.IMREAD_COLOR)
@@ -36,8 +37,11 @@ for fname in files:
     for x,y,w,h in face:
         cv2.rectangle(bgr,(x,y),(x+w,y+h),(255,255,255),2)
  
-    print(os.path.join('oudDir', os.path.basename(fname)))
-#画像の出力
-    # cv2.imwrite(os.path.join('oudDir', os.path.basename(fname)), face_cut)
-    cv2.imwrite(fname, face_cut)
 
+#画像の出力
+    dir: str = f"./outDir/{str(cut)}.png"
+    try:
+        cv2.imwrite(dir, face_cut)
+    except Exception as e:
+        print(e)
+    cut = cut + 1
