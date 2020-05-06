@@ -17,13 +17,13 @@ if not os.path.exists(dirname):
     os.mkdir(dirname)
 
 
-cut: int = 1
 #画像ファイルの読み込み
 for fname in files:
   bgr = cv2.imread(fname, cv2.IMREAD_COLOR)
   gray = cv2.cvtColor(bgr, cv2.COLOR_BGR2GRAY)
   
   face = cascade.detectMultiScale(gray)
+  
   if len(face) <= 0:
     print("顔認証できず(´･ω･｀)")
     print(fname)
