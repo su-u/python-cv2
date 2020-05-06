@@ -1,0 +1,14 @@
+version: '3.2'
+services:
+  python:
+    image: python:3.8
+    # build: ../docker
+    # command: sleep infinity
+    # volumes:
+    #   - type: bind
+    #     source: ../
+    #     target: /workspace
+    #   - ~/.gitconfig:/root/.gitconfig
+    #   - ./.latexmkrc:/root/.latexmkrc
+    # environment:
+    #   SHELL: "/bin/bash"
