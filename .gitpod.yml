@@ -1,0 +1,5 @@
+image:
+  file: .devcontainer/Dockerfile
+
+tasks:
+  - init: pip install opencv-contrib-python
