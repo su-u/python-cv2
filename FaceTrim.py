@@ -23,7 +23,7 @@ for fname in files:
   gray = cv2.cvtColor(bgr, cv2.COLOR_BGR2GRAY)
   
   face = cascade.detectMultiScale(gray)
-  
+
   if len(face) <= 0:
     print("顔認証できず(´･ω･｀)")
     print(fname)
@@ -39,4 +39,3 @@ for fname in files:
         count += 1
     except Exception as e:
         print(e)
-  
