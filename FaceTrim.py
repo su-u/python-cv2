@@ -3,12 +3,15 @@ import cv2
 import numpy as np
 import glob
 import os
+import time
+import copy
  
 #カスケード型分類器に使用する分類器のデータ（xmlファイル）を読み込み
 HAAR_FILE="./haarcascade_frontalface_alt.xml"
 cascade = cv2.CascadeClassifier(HAAR_FILE)
 
-files = glob.glob("./img/SpringBase/*")
+files = glob.glob("./img/same/*")
+# files = glob.glob("./img/SpringBase/*")
 dirname = 'outDir'
 if not os.path.exists(dirname):
     os.mkdir(dirname)
@@ -17,39 +20,23 @@ if not os.path.exists(dirname):
 cut: int = 1
 #画像ファイルの読み込み
 for fname in files:
+  bgr = cv2.imread(fname, cv2.IMREAD_COLOR)
+  gray = cv2.cvtColor(bgr, cv2.COLOR_BGR2GRAY)
+  
+  face = cascade.detectMultiScale(gray)
+  if len(face) <= 0:
+    print("顔認証できず(´･ω･｀)")
+    print(fname)
+    continue
 
-    bgr = cv2.imread(fname, cv2.IMREAD_COLOR)
-    if bgr is None:
-        print(fname + ':Cannot read image file')
-        continue
-    gray = cv2.cvtColor(bgr, cv2.COLOR_BGR2GRAY)
-    face_rects = cascade.detectMultiScale(gray, 1.1, 3)
-    
-
-#カスケード型分類器を使用して画像ファイルから顔部分を検出する
-    face = cascade.detectMultiScale(gray)
-    if len(face) <= 0:
-        print(fname)
-        continue
-    
-#顔の座標を表示する
-    # print(face)
- 
-#顔部分を切り取る
-    for x,y,w,h in face:
-        face_cut = bgr[y:y+h, x:x+w]
- 
-#白枠で顔を囲む
-    for x,y,w,h in face:
-        cv2.rectangle(bgr,(x,y),(x+w,y+h),(255,255,255),2)
- 
-
-#画像の出力
-    dir: str = f"./outDir/{os.path.basename(fname)}"
-    # print(dir)
-    # cv2.imshow("frame_orig", face_cut)
-    try:
-        cv2.imwrite(dir, face_cut)
-    except Exception as e:
-        print(e)
-    cut = cut + 1
+  if len(face) > 0:
+    count: int = 0
+    for x, y, w, h in face:
+      face_cut = bgr[y: y + h, x: x + w]
+      cv2.rectangle(bgr, (x, y), (x + w, y + h), (255, 255, 255), 2)
+      try:
+          dir: str = f"{dirname}/{os.path.basename(fname)}-{count}.jpg"
+          cv2.imwrite(dir, face_cut)
+          count += 1
+      except Exception as e:
+          print(e)
