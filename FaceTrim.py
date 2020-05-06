@@ -27,7 +27,7 @@ for fname in files:
  
  
 #顔の座標を表示する
-    print(face)
+    # print(face)
  
 #顔部分を切り取る
     for x,y,w,h in face:
@@ -39,7 +39,8 @@ for fname in files:
  
 
 #画像の出力
-    dir: str = f"./outDir/{str(cut)}.png"
+    dir: str = f"./outDir/{os.path.basename(fname)}"
+    print(dir)
     try:
         cv2.imwrite(dir, face_cut)
     except Exception as e:
