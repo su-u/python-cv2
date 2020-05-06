@@ -2,12 +2,13 @@
 import cv2
 import numpy as np
 import glob
+import os
  
 #カスケード型分類器に使用する分類器のデータ（xmlファイル）を読み込み
 HAAR_FILE="./haarcascade_frontalface_alt.xml"
 cascade = cv2.CascadeClassifier(HAAR_FILE)
 
-files =glob.glob("./img/SpringBase/*")
+files = glob.glob("./img/SpringBase/*")
 
 
 
@@ -34,6 +35,6 @@ for fname in files:
         cv2.rectangle(bgr,(x,y),(x+w,y+h),(255,255,255),2)
  
 #画像の出力
-    cv2.imwrite(fname, face_cut)
-    #cv2.imwrite('face_rectangle.jpg', bgr)
+    cv2.imwrite(os.path.join('./oudDir', os.path.basename(fname)), face_cut)
+    # cv2.imwrite(fname, face_cut)
 
